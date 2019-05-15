@@ -1,15 +1,14 @@
-import pandas as pd
 import numpy as np
-import sys
-from keras import backend
+import pandas as pd
+import keras_resnet.models
+from keras.layers import Input
 from keras.utils import np_utils
+from keras.callbacks import CSVLogger
 from sklearn.model_selection import train_test_split
 
 desired_width = 520
 pd.set_option('display.width', desired_width)
 
-sys.path.insert(0,'keras-resnet')
-from resnet import ResnetBuilder
 
 print('Set variables')
 data = pd.read_pickle('data.pkl')
@@ -17,54 +16,29 @@ nr_labels = len(data['label'].unique())
 nr_samples = data.shape[0]
 nr_channels = 3
 nr_pixels = 224
-nr_samples = len(data['image'])
-# image_shape = (nr_samples, nr_pixels, nr_pixels, nr_channels)
-image_shape = (nr_channels, nr_pixels, nr_pixels)
-# print(data.image[0])
+image_shape = (nr_pixels, nr_pixels, nr_channels)
 
-
-
-# set keras model
-print('Build resnet and compile')
-DIM_ORDERING = {'th', 'tf'}
-model = ResnetBuilder.build_resnet_18(input_shape=image_shape, num_outputs=nr_labels)
-# backend.set_image_dim_ordering('th')
-# model.compile(optimizer='sgd')
-model.compile(optimizer="sgd")
-# model.compile(loss="categorical_crossentropy", optimizer="sgd")
+input_shape = Input(image_shape)
 
 # train test banana split
 print('Create train test split')
 X = np.array(data['image'].tolist())
-
-# print(len(X[0]))
-# print(len(X))
-# print(X.shape)
-#
-# for i in X:
-#     print(i)
-
-# X = X.reshape((len(X), nr_pixels, nr_pixels, nr_channels))
-# print(X[0])
 y = np.array(data['label'].tolist())
-# print(y)
-# y = y.reshape(-1, 1)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-y_train = np_utils.to_categorical(y_train, nr_labels)
-y_test = np_utils.to_categorical(y_test, nr_labels)
-# print(X_train)
-# print(Y_train)
+X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.2, train_size=10)
+Y_train = np_utils.to_categorical(Y_train, nr_labels)
+Y_test = np_utils.to_categorical(Y_test, nr_labels)
 
-
-print(X_train.shape)
-print(len(X_train))
-
-print(y_train.shape)
-print(len(y_train))
 # train model
-print('Fitting model...')
-# history = model.fit(X_train, Y_train, verbose=1) # validation_data=(X_test, Y_test))
-# history = model.fit(X_train, Y_train, verbose=1) # validation_data=(X_test, Y_test))
-history = model.fit(X_test, y_test, verbose=1)
-# score = model.evaluate(X_test, y_test, verbose=0)
-# print(score)
+print('Create ResNet models')
+nr_epochs = 40
+
+model_50 = keras_resnet.models.ResNet50(input_shape, classes=nr_labels)
+model_50.compile("adam", "categorical_crossentropy", ["accuracy"])
+csv_logger = CSVLogger('logs\\training_resnet50.log', separator=',', append=False)
+history = model_50.fit(X_train, Y_train, verbose=1, callbacks=[csv_logger], epochs=nr_epochs)
+score = model_50.evaluate(X_test, Y_test, verbose=0)
+print('ResNet50 score:')
+print(score)
+
+print('Saving ResNet50 to hdf5.')
+model_50.save('models\\resnet50.hdf5')
