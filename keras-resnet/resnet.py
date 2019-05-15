@@ -18,7 +18,6 @@ from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
 
-
 def _bn_relu(input):
     """Helper to build a BN -> relu block
     """
@@ -198,16 +197,21 @@ class ResnetBuilder(object):
         """
         _handle_dim_ordering()
         if len(input_shape) != 3:
-            raise Exception("Input shape should be a tuple (nb_channels, nb_rows, nb_cols)")
+            raise Exception("Input shape should be a tuple (nb_samples, nb_channels, nb_rows, nb_cols)")
 
         # Permute dimension order if necessary
         if K.image_dim_ordering() == 'tf':
             input_shape = (input_shape[1], input_shape[2], input_shape[0])
+            # input_shape = (input_shape[0], input_shape[2], input_shape[3], input_shape[1]) # with 4
 
+        print(input_shape)
         # Load function from str if needed.
         block_fn = _get_block(block_fn)
 
-        input = Input(shape=input_shape)
+        input = Input(input_shape)
+        print(input)
+        # input = Input(shape=(1851,224,224,3))
+        # print(input)
         conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
         pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding="same")(conv1)
 
@@ -225,10 +229,16 @@ class ResnetBuilder(object):
         pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
                                  strides=(1, 1))(block)
         flatten1 = Flatten()(pool2)
+        # act =  Activation( tf.nn.softmax)
+        # dense = Dense(units=num_outputs, kernel_initializer="he_normal",activation=act)(flatten1)
         dense = Dense(units=num_outputs, kernel_initializer="he_normal",
                       activation="softmax")(flatten1)
 
+        # print(input)
+        # print(input[1])
         model = Model(inputs=input, outputs=dense)
+        print(model)
+        print(' I make model')
         return model
 
     @staticmethod

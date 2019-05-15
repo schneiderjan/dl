@@ -4,35 +4,47 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - _tflow_select=2.3.0=mkl
+  - absl-py=0.7.1=py36_0
   - asn1crypto=0.24.0=py36_1003
+  - astor=0.7.1=py36_0
   - backports=1.0=py_2
   - backports.weakref=1.0rc1=py36_1
   - blas=1.0=mkl
   - bleach=1.5.0=py36_0
-  - ca-certificates=2019.1.23=0
+  - ca-certificates=2019.3.9=hecc5488_0
   - certifi=2019.3.9=py36_0
   - cffi=1.12.2=py36hb32ad35_1
   - chardet=3.0.4=py36_1003
   - console_shortcut=0.1.1=3
   - cryptography=2.6.1=py36hb32ad35_0
+  - cycler=0.10.0=py_1
   - freetype=2.9.1=ha9979f8_1
-  - h5py=2.9.0=nompi_py36h3cb27cb_1102
+  - gast=0.2.2=py36_0
+  - grpcio=1.16.1=py36h351948d_1
+  - h5py=2.9.0=py36h5e291fa_0
   - hdf5=1.10.4=nompi_hcc15c50_1106
   - html5lib=0.9999999=py36_0
   - icc_rt=2019.0.0=h0cc432a_1
+  - icu=58.2=ha66f8fd_1
   - idna=2.8=py36_1000
   - intel-openmp=2019.3=203
   - jpeg=9b=hb83a4c4_2
-  - keras=2.2.4=py36_0
-  - keras-applications=1.0.4=py_1
-  - keras-preprocessing=1.0.2=py_1
+  - keras=2.2.4=0
+  - keras-applications=1.0.7=py_0
+  - keras-base=2.2.4=py36_0
+  - keras-preprocessing=1.0.9=py_0
+  - kiwisolver=1.1.0=py36he980bc4_0
   - libgpuarray=0.7.6=hfa6e2cd_1003
+  - libmklml=2019.0.3=0
   - libpng=1.6.37=h2a8f88b_0
   - libprotobuf=3.7.0=h1a1b453_2
   - libtiff=4.0.10=hb898794_2
   - mako=1.0.7=py_1
   - markdown=2.6.11=py_0
   - markupsafe=1.1.1=py36hfa6e2cd_0
+  - matplotlib=3.0.3=py36_1
+  - matplotlib-base=3.0.3=py36h3e3dc42_1
   - menuinst=1.4.16=py36_0
   - mkl=2019.3=203
   - mkl_fft=1.0.11=py36hfa6e2cd_0
@@ -41,7 +53,7 @@ dependencies:
   - numpy=1.16.2=py36h19fb1c0_0
   - numpy-base=1.16.2=py36hc3f5095_0
   - olefile=0.46=py36_0
-  - openssl=1.1.1=he774522_0
+  - openssl=1.1.1b=hfa6e2cd_2
   - pandas=0.24.2=py36h6538335_0
   - pbr=5.1.3=py_0
   - pillow=6.0.0=py36hdc69c19_0
@@ -51,6 +63,8 @@ dependencies:
   - pycparser=2.19=py36_1
   - pygpu=0.7.6=py36h452e1ab_1000
   - pyopenssl=19.0.0=py36_0
+  - pyparsing=2.4.0=py_0
+  - pyqt=5.9.2=py36h6538335_0
   - pyreadline=2.1=py36_1000
   - pysocks=1.6.8=py36_1002
   - python=3.6.7=he025d50_1004
@@ -58,15 +72,23 @@ dependencies:
   - pytz=2018.9=py_0
   - pywin32=224=py36hfa6e2cd_1000
   - pyyaml=5.1=py36hfa6e2cd_0
+  - qt=5.9.7=vc14h73c81de_0
   - requests=2.21.0=py36_1000
   - ruamel_yaml=0.15.71=py36hfa6e2cd_1000
+  - scikit-learn=0.20.3=py36h343c172_0
   - scipy=1.2.1=py36h29ff71c_0
   - setuptools=40.8.0=py36_0
+  - sip=4.19.8=py36h6538335_1000
   - six=1.12.0=py36_1000
   - sqlite=3.26.0=he774522_0
-  - tensorflow=1.3.0=py36_0
+  - tensorboard=1.13.1=py36h33f27b4_0
+  - tensorflow=1.13.1=mkl_py36hd212fbe_0
+  - tensorflow-base=1.13.1=mkl_py36hcaf7020_0
+  - tensorflow-estimator=1.13.0=py_0
+  - termcolor=1.1.0=py36_1
   - theano=1.0.3=py36_0
   - tk=8.6.8=hfa6e2cd_0
+  - tornado=6.0.2=py36hfa6e2cd_0
   - urllib3=1.24.1=py36_1000
   - vc=14.1=h21ff451_3
   - vs2015_runtime=15.5.2=3
@@ -79,5 +101,7 @@ dependencies:
   - yaml=0.1.7=hc54c509_2
   - zlib=1.2.11=h2fa13f4_1004
   - zstd=1.3.7=h508b16e_0
+  - pip:
+    - keras-resnet==0.2.0
 prefix: C:\Users\jan\Miniconda3\envs\dl
 
