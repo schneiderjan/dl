@@ -27,7 +27,7 @@ for name in model_names:
     plt.title('model accuracy')
     plt.ylabel('Accuracy')
     plt.xlabel('Epoch')
-    plt.legend(model_names, loc='upper left')
+    plt.legend(model_names, loc='lower right')
     plt.savefig('plots\\acc_epoch.png'.format(name))
 
 plt.clf()
