@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 desired_width = 520
 pd.set_option('display.width', desired_width)
@@ -16,3 +17,7 @@ print(group.agg(['count']).max())
 print(group.agg(['count']).min())
 print(group.agg(['count']).min())
 print(data.groupby(by=['label']).count().mean())
+
+
+df = pd.read_csv('logs\\test_accuracy.csv')
+print(df.groupby(by='model').agg(np.ptp))

@@ -5,6 +5,9 @@ import re
 
 
 df = pd.read_csv('logs\\test_accuracy.csv')
+print(df.groupby(by='model').min())
+
+
 test_means = df.groupby(by='model').mean().reset_index()
 # test_means['layers'] = test_means['model'].replace('ResNet','')
 test_means.loc[len(test_means)+1] = ['ResNet26 (Sun et al.)', -1, 0.9965]
@@ -31,22 +34,22 @@ for name in model_names:
     plt.savefig('plots\\acc_epoch.png'.format(name))
 
 plt.clf()
-#
-# # plot loss
-# for name in model_names:
-#     log_file = 'logs\\best\\{}.log'.format(name)
-#     model_history = pd.read_csv(log_file, sep=',')
-#
-#     plt.plot(model_history['loss'])
-#     # plt.plot(model_history['val_loss'])
-#     plt.title('model loss')
-#     plt.ylabel('Loss')
-#     plt.xlabel('Epoch')
-#     plt.legend(model_names, loc='upper left')
-#     plt.savefig('plots\\loss_{}.png'.format(name))
-#
-# plt.clf()
-#
+
+# plot loss
+for name in model_names:
+    log_file = 'logs\\best\\{}.log'.format(name)
+    model_history = pd.read_csv(log_file, sep=',')
+
+    plt.plot(model_history['loss'])
+    # plt.plot(model_history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(model_names, loc='upper right')
+    plt.savefig('plots\\loss_epoch.png'.format(name))
+
+plt.clf()
+
 # bat plot acc
 x = np.arange(len(test_means))
 accuracies = test_means.acc.tolist()
