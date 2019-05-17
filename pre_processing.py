@@ -79,6 +79,7 @@ for idx, row in data.iterrows():
                 elif k == 2:
                     pixels[i][j][k] = pixels[i][j][k] - mean_b
     data.at[idx, 'image'] = pixels
+    # The pixels movie has has tomato meter of 16%
 
 
 print(data.head())
